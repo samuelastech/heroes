@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Neymar da Silva",
+    "age": "30",
+    "power": "Magic"
+  },
+  {
+    "id": 2,
+    "name": "Luciano Hulk",
+    "age": 100,
+    "power": "Ancient"
+  }
+]
