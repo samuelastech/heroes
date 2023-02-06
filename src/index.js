@@ -36,6 +36,14 @@ const routes = {
   },
 };
 
+const handleError = response => {
+  return error => {
+    console.log(error);
+    response.writeHead(500, DEFAULT_HEADER);
+    return response.end();
+  };
+};
+
 const handler = (request, response) => {
   const { url, method } = request;
   const [first, route, id] = url.split('/');
@@ -43,7 +51,7 @@ const handler = (request, response) => {
   const key = `/${route}:${method.toLowerCase()}`;
   response.writeHead(200, DEFAULT_HEADER);
   const chosen = routes[key] || routes.default;
-  return chosen(request, response);
+  return chosen(request, response).catch(handleError(response));
 };
 
 const app = http.createServer(handler);
