@@ -14,20 +14,24 @@ const routes = {
   },
   '/heroes:post': async (request, response) => {
     for await (const data of request) {
-      const item = JSON.parse(data);
-      const hero = new Hero(item);
-      const { error, valid } = hero.isValid();
+      try {
+        const item = JSON.parse(data);
+        const hero = new Hero(item);
+        const { error, valid } = hero.isValid();
 
-      if (!valid) {
-        response.writeHead(400, DEFAULT_HEADER);
-        response.write(JSON.stringify({ error, }));
+        if (!valid) {
+          response.writeHead(400, DEFAULT_HEADER);
+          response.write(JSON.stringify({ error, }));
+          return response.end();
+        }
+
+        const id = await heroService.create(hero);
+        response.writeHead(201, DEFAULT_HEADER);
+        response.write(JSON.stringify({ success: 'User created', id, }));
         return response.end();
+      } catch (error) {
+        return handleError(response)(error);
       }
-
-      const id = await heroService.create(hero);
-      response.writeHead(201, DEFAULT_HEADER);
-      response.write(JSON.stringify({ success: 'User created', id, }));
-      return response.end();
     }
   },
   default: (request, response) => {
