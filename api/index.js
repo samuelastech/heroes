@@ -1,8 +1,8 @@
 const http = require('http');
 const PORT = 3000;
 const DEFAULT_HEADER = { 'Content-Type': 'application/json' };
-const HeroFactory = require('./factories/heroFactory');
-const Hero = require('./entities/hero');
+const HeroFactory = require('../src/factories/heroFactory');
+const Hero = require('../src/entities/hero');
 const heroService = HeroFactory.generateInstance();
 
 const routes = {
@@ -25,7 +25,7 @@ const routes = {
           return response.end();
         } else {
           const id = await heroService.create(hero);
-          // response.writeHead(201, DEFAULT_HEADER);
+          response.writeHead(201, DEFAULT_HEADER);
           response.write(JSON.stringify({ success: 'User created', id, }));
           return response.end();
         }
