@@ -23,12 +23,12 @@ const routes = {
           response.writeHead(400, DEFAULT_HEADER);
           response.write(JSON.stringify({ error, }));
           return response.end();
+        } else {
+          const id = await heroService.create(hero);
+          // response.writeHead(201, DEFAULT_HEADER);
+          response.write(JSON.stringify({ success: 'User created', id, }));
+          return response.end();
         }
-
-        const id = await heroService.create(hero);
-        response.writeHead(201, DEFAULT_HEADER);
-        response.write(JSON.stringify({ success: 'User created', id, }));
-        return response.end();
       } catch (error) {
         return handleError(response)(error);
       }
