@@ -1,6 +1,11 @@
 const http = require('http');
 const PORT = 3000;
-const DEFAULT_HEADER = { 'Content-Type': 'application/json' };
+const DEFAULT_HEADER = {
+  'Content-Type': 'application/json',
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'OPTIONS, POST, GET',
+  'Access-Control-Max-Age': 2592000, // 30 days
+};
 const HeroFactory = require('../src/factories/heroFactory');
 const Hero = require('../src/entities/hero');
 const heroService = HeroFactory.generateInstance();
