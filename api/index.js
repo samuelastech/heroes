@@ -34,7 +34,7 @@ const routes = {
       }
     }
   },
-  default: (request, response) => {
+  default: async (request, response) => {
     response.write('Hello');
     response.end();
   },
