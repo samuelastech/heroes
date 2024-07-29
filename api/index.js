@@ -40,6 +40,7 @@ const routes = {
     }
   },
   default: async (request, response) => {
+    response.writeHead(200, DEFAULT_HEADER);
     response.write('Hello');
     response.end();
   },
@@ -58,7 +59,7 @@ const handler = (request, response) => {
   const [first, route, id] = url.split('/');
   request.queryString = { id: isNaN(id) ? id : +id };
   const key = `/${route}:${method.toLowerCase()}`;
-  response.writeHead(200, DEFAULT_HEADER);
+  
   const chosen = routes[key] || routes.default;
   return chosen(request, response).catch(handleError(response));
 };
