@@ -1,0 +1,97 @@
+openapi: 3.0.3
+
+info:
+  title: Heroes
+  description: A simple API where you can register hero entities.
+  contact:
+    email: samuel.araujo.souza@outlook.com
+  version: 1.0.0
+
+externalDocs:
+  description: See the repository
+  url: https://github.com/samuelastech/heroes
+
+servers:
+  - url: https://heroes-vdue.onrender.com
+tags:
+  - name: hero
+
+paths:
+  /heroes:
+    get:
+      tags:
+        - hero
+      summary: List all existing heroes
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Heroes'
+    post:
+      tags:
+        - hero
+      summary: Add a new hero in the list
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeroPOST'
+        required: true
+      responses:
+        '201':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    example: "User created"
+                  id:
+                    type: integer
+                    format: int64
+                    example: 1721948380734
+components:
+  schemas:
+    HeroPOST:
+      required:
+        - name
+        - age
+        - power
+      type: object
+      properties:
+        name:
+          type: string
+          example: Ben 10
+        age:
+          type: string
+          example: "15"
+        power:
+          type: string
+          example: "Turn into 10 different aliens"
+    Hero:
+      required:
+        - name
+        - age
+        - power
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10
+        name:
+          type: string
+          example: Ben 10
+        age:
+          type: integer
+          example: 15
+        power:
+          type: string
+          example: "Turn into 10 different aliens"
+    Heroes:
+      type: array
+      items:
+        $ref: '#/components/schemas/Hero'
